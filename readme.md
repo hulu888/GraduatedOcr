@@ -13,8 +13,10 @@
     #该Module依赖于第三方库shapely、pyclipper，使用该Module之前，请先安装shapely、pyclipper
     !pip install shapely -i https://pypi.tuna.tsinghua.edu.cn/simple 
     !pip install pyclipper -i https://pypi.tuna.tsinghua.edu.cn/simple 
+
+3. 安装Django
   
-3. 样例
+4. 样例
     ```
    https://aistudio.baidu.com/aistudio/projectdetail/507159
    ```

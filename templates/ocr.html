@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+        <!-- 可选的 Bootstrap 主题文件（一般不用引入） -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+        <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+        <script src="/static/jQuery/jquery-3.6.0.min.js"></script>
+        <script type="text/javascript">
+
+
+            function syntaxHighlight(json) {
+
+                  if (typeof json != 'string') {
+                      json = JSON.stringify(json, undefined, 2);
+                  }
+                  json = json.replace(/&/g, '&').replace(/</g, '<').replace(/>/g, '>');
+
+                  return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g,
+                      function(match) {
+                          var cls = 'number';
+                          if (/^"/.test(match)) {
+                             if (/:$/.test(match)) {
+                                 cls = 'key';
+                             } else {
+                                 cls = 'string';
+                             }
+                          } else if (/true|false/.test(match)) {
+                             cls = 'boolean';
+                          } else if (/null/.test(match)) {
+                             cls = 'null';
+                          }
+                         return '<span class="' + cls + '">' + match + '</span>';
+                     }
+                 );
+            }
+
+            $(document).ready(function () {
+                // 格式化json
+                const tx = "";
+                $("#res").html(syntaxHighlight(tx));
+
+                // 显示选中图片
+                $("#input-img").change(function () {
+                    $("#reg-img").attr("src", URL.createObjectURL($(this)[0].files[0]));
+                });
+
+                $("#upload").click(function () {
+                var formData = new FormData();
+                {#console.log($("#input-img")[0])#}
+                formData.append("img", $("#input-img")[0].files[0]);
+
+                $.ajax({
+                    url: '/',
+                    type: 'post',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (msg) {
+                        if (msg === "false") {
+                            alert("未识别出任何字符")
+                        } else {
+                            const jsonData = JSON.parse(msg);
+                            const save_path = jsonData["save_path"];
+                            const data = jsonData["data"];
+                            $("#reg-img").attr("src", save_path);
+                            {#$("#reg-img").attr("src", URL.createObjectURL($(this)[0].files[0]));#}
+                            $("#res").html(syntaxHighlight(data));
+
+                        }
+                    }
+                });
+            });
+
+
+
+            })
+
+
+
+
+        </script>
+    </head>
+    <body>
+
+        <div class="container">
+            <div>
+                <h1 class="text-center">仪表字符识别</h1>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+
+                        <input id="input-img" name="input-img" type="file">
+                        <button id="upload" class="btn-success btn-sm btn">上传</button>
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+
+                <div class="col-md-12">
+                    <img  id="reg-img" src="/static/images/img0.jpeg" alt="" width="100%" height="100%">
+                </div>
+
+
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="text-center">
+                        <h3>识别结果</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div >
+
+                        <pre id="res">
+
+                        </pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </body>
+</html>

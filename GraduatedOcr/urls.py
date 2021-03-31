@@ -20,7 +20,13 @@ from views import recog_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('reg/', recog_view.recognition),
+    path('recognition/', recog_view.recognition),
+    re_path('^$', recog_view.login),
+    path('index/', recog_view.index),
+    path('tables/', recog_view.tables),
+    path('calendar/', recog_view.calendar),
+    # path('form/', recog_view.form),
+    path('chart/', recog_view.chart),
 ]
 
 

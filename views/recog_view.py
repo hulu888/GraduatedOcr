@@ -10,7 +10,7 @@ from . import recognition as recog
 def recognition(request):
     if request.method == 'GET':
 
-        return render(request, 'ocr.html')
+        return render(request, 'ocr/ocr.html')
 
     if request.method == 'POST':
 

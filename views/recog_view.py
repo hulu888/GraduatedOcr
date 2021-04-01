@@ -31,10 +31,14 @@ def form(request):
         return render(request, 'ocr/recognition.html')
 
 
-
 def chart(request):
     if request.method == 'GET':
         return render(request, 'ocr/chart.html')
+
+
+def not_found(request):
+    if request.method == 'GET':
+        return render(request, 'ocr/404.html')
 
 
 def recognition(request):
@@ -53,8 +57,10 @@ def recognition(request):
             f.write(img_obj.read())
 
         reg_images = [img_name]
+        start = time.time()
         results = recog.reg_image(reg_images)
-        # print(results)
+        end = time.time()
+        print(end - start)
         if results:
             reg_data = results[0]
             return HttpResponse(json.dumps(reg_data))

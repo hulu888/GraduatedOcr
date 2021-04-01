@@ -27,6 +27,7 @@ urlpatterns = [
     path('calendar/', recog_view.calendar),
     # path('form/', recog_view.form),
     path('chart/', recog_view.chart),
+    path('404/', recog_view.not_found),
 ]
 
 

@@ -16,18 +16,24 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, re_path
 
-from views import recog_view
+from views import recog_view, user, img_manager
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('recognition/', recog_view.recognition),
-    re_path('^$', recog_view.login),
+    re_path('^$', user.login),
+    path('login/', user.login),
     path('index/', recog_view.index),
-    path('tables/', recog_view.tables),
-    path('calendar/', recog_view.calendar),
+    path('usersmanage/', user.usersmanage),
+    path('imagesmanage/', img_manager.imagesmanage),
     # path('form/', recog_view.form),
     path('chart/', recog_view.chart),
     path('404/', recog_view.not_found),
+    path('register/', user.register),
+
+    path('adduser/', user.adduser),
+    re_path('^edituser', user.edituser),
+
 ]
 
 

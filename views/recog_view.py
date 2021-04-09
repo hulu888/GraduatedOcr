@@ -2,28 +2,14 @@ from django.http import HttpResponse
 from django.shortcuts import redirect, render
 import time
 import json
+from django.contrib.auth.models import User
 
 from . import recognition as recog
-
-
-def login(request):
-    if request.method == 'GET':
-        return render(request, 'ocr/login.html')
 
 
 def index(request):
     if request.method == 'GET':
         return render(request, 'ocr/index.html')
-
-
-def tables(request):
-    if request.method == 'GET':
-        return render(request, 'ocr/tables.html')
-
-
-def calendar(request):
-    if request.method == 'GET':
-        return render(request, 'ocr/calendar.html')
 
 
 def form(request):
